@@ -1,5 +1,6 @@
 ---
 output:
+  title: A tutorial introduction to Make for reproducible research
   pdf_document:
     keep_tex: true
     toc: false
@@ -137,10 +138,14 @@ cat pi-*est
 Describe `make -j8` to run this in parallel.
 
 
+NOTE: intermediate files are not kept.  
+
+Perhaps show a 4x3 grid of 12 simulations?
+
 # What next
 
 Further reading (books); other programs that build upon idea of make
-(snakemake, 
+(snakemake, drake).
 
 \url{https://www.frontiersin.org/articles/10.3389/fninf.2016.00002/full}
 
@@ -149,3 +154,7 @@ Further reading (books); other programs that build upon idea of make
 
 Is it worth having this in Rmarkdown, or would a Rnw be better, so
 that we can just work with latex?
+
+# Acknowledgements
+
+Mozilla CODECHECK for funding
