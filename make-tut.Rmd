@@ -42,6 +42,11 @@ how to estimate pi with a dartboard
 ```{bash, code = readLines("v1-R/Makefile"), eval=FALSE,echo=TRUE}
 ```
 
+## TODO Anatomy of a rule.
+
+what is a rule?  target? dependency?  how it does it decide whether to
+re-execture the rule (timestamps of files).
+
 
 ## Running it (for real)
 
@@ -108,7 +113,13 @@ directory, rather than to generate a file called "all".  Likewise,
 
 # Version 2 -- generate lots of simulations.
 
-# Version 2 (R Makefile2)
+In version 2, we want to highlight how to make rules more flexible.
+Example application here would be generating lots of simulation runs,
+rather than just one.
+
+
+
+## Version 2 (R Makefile2)
 
 ```{bash, code = readLines("v1-R/Makefile2"), eval=FALSE,echo=TRUE}
 ```
@@ -122,6 +133,8 @@ cd v1-R
 make -f Makefile2
 cat pi-*est
 ```
+
+Describe `make -j8` to run this in parallel.
 
 
 # What next
