@@ -27,6 +27,17 @@ Why make is useful.  Originally designed into 1970s for the efficient
 compilation of programs.  Gradually adopted to other situations.
 
 
+Note the workflow here
+
+1. Generate
+2. Analyse
+3. Summarise
+
+
+If Generating the data takes 10 hours, and analysing takes only 2
+minutes, you don't want to rerun whole pipeline to regenerate data.
+
+
 # Example problem
 
 ## Estimating pi.
