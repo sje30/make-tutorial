@@ -1,6 +1,6 @@
 # Tell Emacs this is a  -*- Makefile -*-_
 
-.PHONY: all
+.PHONY: all clean
 
 REPEATS := $(shell seq 1 15)
 
@@ -22,3 +22,6 @@ pi-%.est: inside-%.out
 # https://blog.jgc.org/2015/04/the-one-line-you-should-add-to-every.html
 print-%: ; @echo $*=$($*)
 
+
+clean:
+	rm -f $(TARGETS)
