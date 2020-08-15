@@ -1,0 +1,24 @@
+# Tell Emacs this is a  -*- Makefile -*-_
+
+.PHONY: all
+
+REPEATS := $(shell seq 1 15)
+
+TARGETS := $(patsubst %, pi-%.est, $(REPEATS))
+
+all: $(TARGETS)
+
+darts-%.xy: inputs.dat
+	./throw-darts inputs.dat > $@
+
+inside-%.out: darts-%.xy
+	./count-inside $^ > $@
+
+
+pi-%.est: inside-%.out
+	./estimate $^ > $@
+
+
+# https://blog.jgc.org/2015/04/the-one-line-you-should-add-to-every.html
+print-%: ; @echo $*=$($*)
+
