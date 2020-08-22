@@ -25,6 +25,9 @@ for line in darts:
         print('error with inside_check')
 
 plt.axis([-1, 1, -1, 1])
+plt.xticks((-1,1))
+plt.yticks((-1,1))
+
 
 # Extract estimate of pi.
 estimate = float(estimate_file.readline())
