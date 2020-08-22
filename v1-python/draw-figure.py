@@ -30,6 +30,7 @@ plt.axis([-1, 1, -1, 1])
 estimate = float(estimate_file.readline())
 
 plt.title('Estimate of pi: %5.4f' % estimate)
+axes.set_aspect('equal', 'box')
 plt.savefig(sys.argv[4])
 darts.close()
 inside.close()
