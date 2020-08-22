@@ -1,8 +1,9 @@
+import sys
 import matplotlib.pyplot as plt
 
-darts = open('darts.txt', 'r')
-inside = open('inside.txt', 'r')
-estimate_file = open('estimate.txt', 'r')
+darts = open(sys.argv[1], 'r')
+inside = open(sys.argv[2], 'r')
+estimate_file = open(sys.argv[3], 'r')
 
 # Plot circle.
 figure, axes = plt.subplots()
@@ -29,7 +30,6 @@ plt.axis([-1, 1, -1, 1])
 estimate = float(estimate_file.readline())
 
 plt.title('Estimate of pi: %5.4f' % estimate)
-plt.savefig('Estimate_of_pi.png')
-plt.show(block=True)
+plt.savefig(sys.argv[4])
 darts.close()
 inside.close()
