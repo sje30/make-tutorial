@@ -4,7 +4,6 @@
 
 REPEATS := $(shell seq 1 15)
 
-TARGETS := $(patsubst %, pi-%.est, $(REPEATS))
 PDF := $(patsubst %, darts-%.pdf, $(REPEATS))
 
 montage.pdf: $(PDF)
@@ -29,5 +28,5 @@ print-%: ; @echo $*=$($*)
 
 
 clean:
-	rm -f $(TARGETS) montage.pdf
+	rm -f $(PDF) montage.pdf
 
