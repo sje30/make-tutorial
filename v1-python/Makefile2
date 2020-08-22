@@ -1,0 +1,33 @@
+# Tell Emacs this is a  -*- Makefile -*-_
+
+.PHONY: all clean
+
+REPEATS := $(shell seq 1 15)
+
+TARGETS := $(patsubst %, pi-%.est, $(REPEATS))
+PDF := $(patsubst %, darts-%.pdf, $(REPEATS))
+
+montage.pdf: $(PDF)
+	pdfjam darts-*.pdf --nup 5x3 --landscape --outfile $@
+
+darts-%.xy: inputs.dat
+	python throw-darts.py inputs.dat > $@
+
+inside-%.out: darts-%.xy
+	python count-inside.py $^ > $@
+
+
+pi-%.est: inside-%.out
+	python estimate.py $^ > $@
+
+darts-%.pdf: darts-%.xy inside-%.out pi-%.est
+	python draw-figure.py $^ $@
+
+
+# https://blog.jgc.org/2015/04/the-one-line-you-should-add-to-every.html
+print-%: ; @echo $*=$($*)
+
+
+clean:
+	rm -f $(TARGETS) montage.pdf
+
