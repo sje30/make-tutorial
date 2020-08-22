@@ -6,6 +6,8 @@ REPEATS := $(shell seq 1 15)
 
 PDF := $(patsubst %, darts-%.pdf, $(REPEATS))
 
+all: $(PDF)
+
 montage.pdf: $(PDF)
 	pdfjam darts-*.pdf --nup 5x3 --landscape --outfile $@
 
