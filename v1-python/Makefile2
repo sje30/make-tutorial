@@ -2,7 +2,11 @@
 
 .PHONY: all clean
 
-REPEATS := $(shell seq 1 15)
+
+
+REPEATS := 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+## If in a unix environment, a shorter way to generate this is:
+## REPEATS := $(shell seq 1 15)
 
 PDF := $(patsubst %, darts-%.pdf, $(REPEATS))
 
@@ -11,7 +15,7 @@ all: $(PDF)
 montage.pdf: $(PDF)
 	pdfjam darts-*.pdf --nup 5x3 --landscape --outfile $@
 
-darts-%.xy: inputs.dat
+darts-%.xy : inputs.dat
 	python throw-darts.py inputs.dat > $@
 
 inside-%.out: darts-%.xy
