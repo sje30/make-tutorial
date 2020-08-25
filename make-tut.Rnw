@@ -71,7 +71,7 @@ If we are writing programs to execute each of these steps then we can use make t
 \subsection{Version 1 (R makefile)}
 
 
-\fbox{\lstinputlisting{v1-R/Makefile}}
+\fbox{\lstinputlisting{v1-R/Makefile1}}
 
 
 TODO Anatomy of a rule.
@@ -84,6 +84,7 @@ re-execute the rule (timestamps of files).
 
 <<engine='bash'>>=
 cd v1-R
+cp Makefile1 Makefile
 make
 @ 
 
