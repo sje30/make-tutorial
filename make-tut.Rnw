@@ -47,8 +47,19 @@ minutes, you don't want to rerun whole pipeline to regenerate data.
 
 \subsection{Estimating pi}
 
-how to estimate pi with a dartboard.  \textbf{Iain: can you write this
-section, explain how we solve the problem in the three steps above.}
+A useful example for using make is the dartboard method for estimating pi.
+
+Consider a dartboard of radius 1 set in a square of side length 2. We randomly throw darts uniformly across the square and count the fraction that land in the dartboard. In expectation, this fraction will be the ratio of the area of the dartboard (pi) to the area of the square (4). Hence we estimate pi as 4 times the fraction of darts that land in the dartboard. We may also want to display the position of the darts in a diagram for the ease of future readers.
+
+This process neatly captures the three steps of workflow above:
+
+Firstly we want to generate data: this is the throwing of the darts at the square and storing the position of each in an accesible format.
+
+Secondly we want to analyse this data: this is calculating the fraction of the darts which landed inside the dartboard and inferring an estimate of pi.
+
+Finally we want to summarise our work: this is displaying the position of our thrown darts and our estimate of pi in an easily readable diagram.
+
+If we are writing programs to execute each of these steps then we can use make to compile each in the correct order and without repeating steps that haven't changed.
 
 \subsection{Traditional approach - write a batch file}
 
