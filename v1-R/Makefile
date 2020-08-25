@@ -2,19 +2,19 @@
 
 all: darts.pdf
 
-darts.xy: inputs.dat throw-darts
-	./throw-darts inputs.dat > darts.xy
+darts.xy: inputs.dat throw-darts throw-darts.R
+	Rscript throw-darts.R inputs.dat > darts.xy
 
-inside.out: darts.xy count-inside
-	./count-inside darts.xy > inside.out
+inside.out: darts.xy count-inside count-inside.R
+	Rscript count-inside.R darts.xy > inside.out
 
-pi.est: inside.out estimate 
-	./estimate inside.out > pi.est
+pi.est: inside.out estimate.R
+	Rscript estimate.R inside.out > pi.est
 
 
 
-darts.pdf: darts.xy inside.out pi.est draw-figure
-	./draw-figure darts.xy inside.out pi.est darts.pdf
+darts.pdf: darts.xy inside.out pi.est draw-figure.R
+	Rscript draw-figure.R darts.xy inside.out pi.est darts.pdf
 
 
 clean:
