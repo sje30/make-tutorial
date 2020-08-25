@@ -1,4 +1,3 @@
-#!/bin/env Rscript
 args <- commandArgs(TRUE)
 
 darts_file = args[1]

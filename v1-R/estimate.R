@@ -1,4 +1,3 @@
-#!/bin/env Rscript
 args <- commandArgs(TRUE)
 insidefile <- args[1]
 inside <- scan(insidefile, what=logical(), quiet=TRUE)
