@@ -162,7 +162,8 @@ distribution of the B estimates of pi.
 
 <<engine='bash'>>=
 cd v1-R
-make -f Makefile2
+cp Makefile2 Makefile
+make 
 cat pi-*est
 @ 
 
