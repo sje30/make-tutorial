@@ -3,7 +3,7 @@
 all: darts.pdf
 
 darts.xy: inputs.dat
-	python throw-darts.py inputs.dat > darts.xy
+	python throw-darts.py inputs.dat> darts.xy
 
 inside.out: darts.xy
 	python count-inside.py darts.xy > inside.out

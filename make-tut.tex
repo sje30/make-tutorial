@@ -1,8 +1,59 @@
-\documentclass[12pt]{article}
+\documentclass[12pt]{article}\usepackage[]{graphicx}\usepackage[]{color}
+% maxwidth is the original width if it is less than linewidth
+% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
 \usepackage{mathpazo}
 \usepackage{hyperref,url}
 \usepackage[a4paper,margin=1.5cm]{geometry}
 \usepackage{listings}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \begin{document}
 
 
@@ -17,13 +68,7 @@
 
 
 
-<<rsetup,eval=TRUE,include=FALSE>>=
-require(knitr)
-require(rprojroot)
-require(xtable)
-options(width=60)
-opts_chunk$set(cache=FALSE)
-@
+
 
 \section{Introduction}
 
@@ -102,19 +147,39 @@ A \emph{rule} must be given for all files that are created in the process. For e
 
 If a file has a rule in the Makefile it can be made from the command line by executing "make $<$filename$>$". For example we can execute the recipe to make darts.xy by typing the following:
 
-<<engine='bash'>>=
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
 cd v1-R
 make darts.xy
-@ 
+\end{alltt}
+
+\begin{verbatim}
+## make[1]: Entering directory '/mhome/damtp/s/id318/Documents/Make_tutorial/make-tutorial/v1-R'
+## Rscript throw-darts.R inputs.dat > darts.xy
+## make[1]: Leaving directory '/mhome/damtp/s/id318/Documents/Make_tutorial/make-tutorial/v1-R'
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
 
 This executes the recipe in the command line and produces the file darts.xy as desired. 
 
 The clever part of the Make rule structure is that it determines whether a file should be remade by looking at the timestamps of the dependencies. If we repeat this command without changing any of the dependencies then Make will simply say that nothing is to be done:
 
-<<engine='bash'>>=
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
 cd v1-R
 make darts.xy
-@ 
+\end{alltt}
+
+\begin{verbatim}
+## make[1]: Entering directory '/mhome/damtp/s/id318/Documents/Make_tutorial/make-tutorial/v1-R'
+## make[1]: 'darts.xy' is up to date.
+## make[1]: Leaving directory '/mhome/damtp/s/id318/Documents/Make_tutorial/make-tutorial/v1-R'
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
 
 This is the importance of dependencies - \underline{a target will only be remade if at least one of its dependencies has a more recent timestamp}. Furthermore, before making the target Make will remake any of its dependencies if their own dependencies have a more recent timestamp and so on.
 
@@ -124,11 +189,22 @@ This is the importance of dependencies - \underline{a target will only be remade
 \subsection{Running it (for real)}
 
 
-<<engine='bash'>>=
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
 cd v1-R
-cp Makefile1 Makefile
 make
-@ 
+\end{alltt}
+
+\begin{verbatim}
+## make[1]: Entering directory '/mhome/damtp/s/id318/Documents/Make_tutorial/make-tutorial/v1-R'
+## Rscript count-inside.R darts.xy > inside.out
+## Rscript estimate.R inside.out > pi.est
+## Rscript draw-figure.R darts.xy inside.out pi.est darts.pdf
+## make[1]: Leaving directory '/mhome/damtp/s/id318/Documents/Make_tutorial/make-tutorial/v1-R'
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
 
 This should generate a new pdf, `darts.pdf`.  If we then delete
 darts.pdf by accident, when we run `make` again, it will not need to
@@ -136,11 +212,21 @@ run all steps of the analysis, as the intermediate files are still
 present.
 
 
-<<engine='bash'>>=
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
 cd v1-R
 rm darts.pdf
 make
-@ 
+\end{alltt}
+
+\begin{verbatim}
+## make[1]: Entering directory '/mhome/damtp/s/id318/Documents/Make_tutorial/make-tutorial/v1-R'
+## Rscript draw-figure.R darts.xy inside.out pi.est darts.pdf
+## make[1]: Leaving directory '/mhome/damtp/s/id318/Documents/Make_tutorial/make-tutorial/v1-R'
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
 
 
 
@@ -202,12 +288,26 @@ Try to generate B=15 samples, and then show a histogram of the
 distribution of the B estimates of pi.
 
 
-<<engine='bash'>>=
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
 cd v1-R
-cp Makefile2 Makefile
-make 
+make -f Makefile2
 cat pi-*est
-@ 
+\end{alltt}
+
+\begin{verbatim}
+## make[1]: Entering directory '/mhome/damtp/s/id318/Documents/Make_tutorial/make-tutorial/v1-R'
+## ./throw-darts inputs.dat > darts-1.xy
+## /bin/sh: 1: ./throw-darts: not found
+## Makefile2:12: recipe for target 'darts-1.xy' failed
+## make[1]: *** [darts-1.xy] Error 127
+## rm darts-1.xy
+## make[1]: Leaving directory '/mhome/damtp/s/id318/Documents/Make_tutorial/make-tutorial/v1-R'
+## cat: 'pi-*est': No such file or directory
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
 
 
 Describe make -j8 to run this in parallel.
