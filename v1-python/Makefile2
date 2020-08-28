@@ -2,13 +2,11 @@
 
 .PHONY: all clean
 
-REPEATS := 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
-## If in a unix environment, a shorter way to generate this is:
-## REPEATS := $(shell seq 1 15)
+REPEATS := $(shell seq 1 15)
 
-PDF := $(patsubst %, darts-%.pdf, $(REPEATS))
+TARGETS := $(patsubst %, pi-%.est, $(REPEATS))
 
-all: $(PDF)
+all: $(TARGETS)
 
 darts-%.xy : inputs.dat
 	python throw-darts.py inputs.dat > $@
@@ -20,8 +18,8 @@ inside-%.out: darts-%.xy
 pi-%.est: inside-%.out
 	python estimate.py $^ > $@
 
-darts-%.pdf: darts-%.xy inside-%.out pi-%.est
-	python draw-figure.py $^ $@
+distribution.pdf: $(TARGETS) plot-distribution.py
+	python plot-distribution.py $(TARGETS)
 
 
 # https://blog.jgc.org/2015/04/the-one-line-you-should-add-to-every.html
@@ -29,9 +27,4 @@ print-%: ; @echo $*=$($*)
 
 
 clean:
-	rm -f $(PDF) montage.pdf
-
-
-montage.pdf: $(PDF)
-	pdfjam darts-*.pdf --nup 5x3 --landscape --outfile $@
-
+	rm -f $(TARGETS)
