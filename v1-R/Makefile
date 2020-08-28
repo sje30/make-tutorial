@@ -2,10 +2,10 @@
 
 all: darts.pdf
 
-darts.xy: inputs.dat throw-darts throw-darts.R
+darts.xy: inputs.dat throw-darts.R
 	Rscript throw-darts.R inputs.dat > darts.xy
 
-inside.out: darts.xy count-inside count-inside.R
+inside.out: darts.xy count-inside.R
 	Rscript count-inside.R darts.xy > inside.out
 
 pi.est: inside.out estimate.R
