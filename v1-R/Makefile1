@@ -1,0 +1,28 @@
+.PHONY: clean all
+
+all: darts.pdf
+
+darts.xy: inputs.dat throw-darts.R
+	Rscript throw-darts.R inputs.dat > darts.xy
+
+inside.out: darts.xy count-inside.R
+	Rscript count-inside.R darts.xy > inside.out
+
+pi.est: inside.out estimate.R
+	Rscript estimate.R inside.out > pi.est
+
+
+
+darts.pdf: darts.xy inside.out pi.est draw-figure.R
+	Rscript draw-figure.R darts.xy inside.out pi.est darts.pdf
+
+
+clean:
+	rm -f darts.xy inside.out pi.est darts.pdf
+
+
+
+## This depends on https://github.com/lindenb/makefile2graph
+
+graph.pdf: Makefile
+	make -Bnd | makefile2graph | dot -Tpdf > graph.pdf

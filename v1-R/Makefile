@@ -1,29 +1,29 @@
-.PHONY: clean all
+# Tell Emacs this is a  -*- Makefile -*-_
 
-all: darts.pdf
+.PHONY: all clean
 
-darts.xy: inputs.dat throw-darts.R
-	Rscript throw-darts.R inputs.dat > darts.xy
+REPEATS := $(shell seq 1 15)
 
-inside.out: darts.xy count-inside.R
-	Rscript count-inside.R darts.xy > inside.out
+TARGETS := $(patsubst %, pi-%.est, $(REPEATS))
 
-pi.est: inside.out estimate.R
-	Rscript estimate.R inside.out > pi.est
+all: $(TARGETS)
+
+darts-%.xy: inputs.dat
+	Rscript throw-darts.R inputs.dat > $@
+
+inside-%.out: darts-%.xy
+	Rscript count-inside.R $^ > $@
 
 
+pi-%.est: inside-%.out
+	Rscript estimate.R $^ > $@
 
-darts.pdf: darts.xy inside.out pi.est draw-figure.R
-	Rscript draw-figure.R darts.xy inside.out pi.est darts.pdf
+distribution.pdf: $(TARGETS) plot-distribution.R
+	Rscript plot-distribution.R $(TARGETS)
+
+# https://blog.jgc.org/2015/04/the-one-line-you-should-add-to-every.html
+print-%: ; @echo $*=$($*)
 
 
 clean:
-	rm -f darts.xy inside.out pi.est darts.pdf
-
-
-
-## This depends on https://github.com/lindenb/makefile2graph
-
-graph.pdf: Makefile
-	make -Bnd | makefile2graph | dot -Tpdf > graph.pdf
-
+	rm -f $(TARGETS)
